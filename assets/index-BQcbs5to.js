@@ -33,29 +33,29 @@
             width: ${s}px;
             height: ${s}px;
             background-color: transparent;
-          `,this.element.appendChild(h)}return this.element}createDragPreview(){const e=document.createElement("div");e.className="shape-preview";const t=this.pattern.length,r=this.pattern[0].length;e.style.cssText=`
+          `,this.element.appendChild(h)}return this.element}createDragPreview(){const e=document.createElement("div");e.className="shape-preview";const t=this.pattern.length,r=this.pattern[0].length,s=window.innerWidth;let i=30,a=2;s<400?(i=22,a=1):s<768&&(i=25,a=2),e.style.cssText=`
       display: grid;
-      grid-template-columns: repeat(${r}, 30px);
-      grid-template-rows: repeat(${t}, 30px);
-      gap: 2px;
+      grid-template-columns: repeat(${r}, ${i}px);
+      grid-template-rows: repeat(${t}, ${i}px);
+      gap: ${a}px;
       pointer-events: none;
       position: fixed;
       z-index: 1000;
       opacity: 0.7;
-    `;for(let s=0;s<t;s++)for(let i=0;i<r;i++){const a=document.createElement("div");this.pattern[s][i]?a.style.cssText=`
-            width: 30px;
-            height: 30px;
+    `;for(let l=0;l<t;l++)for(let h=0;h<r;h++){const o=document.createElement("div");this.pattern[l][h]?o.style.cssText=`
+            width: ${i}px;
+            height: ${i}px;
             background-color: ${this.color};
             border-top: 4px solid rgba(255, 255, 255, 0.6);
             border-left: 4px solid rgba(255, 255, 255, 0.6);
             border-right: 4px solid rgba(0, 0, 0, 0.4);
             border-bottom: 4px solid rgba(0, 0, 0, 0.4);
             box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.4), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
-          `:a.style.cssText=`
-            width: ${cellSize}px;
-            height: ${cellSize}px;
+          `:o.style.cssText=`
+            width: ${i}px;
+            height: ${i}px;
             background-color: transparent;
-          `,e.appendChild(a)}return e}static getRandomShapeType(){const e=Object.keys(g.SHAPES);return e[Math.floor(Math.random()*e.length)]}}class u{constructor(){this.shapes=[],this.element=null,this.slots=[]}createElement(){this.element=document.createElement("div"),this.element.className="shape-selector",this.element.style.cssText=`
+          `,e.appendChild(o)}return e}static getRandomShapeType(){const e=Object.keys(g.SHAPES);return e[Math.floor(Math.random()*e.length)]}}class u{constructor(){this.shapes=[],this.element=null,this.slots=[]}createElement(){this.element=document.createElement("div"),this.element.className="shape-selector",this.element.style.cssText=`
       display: flex;
       justify-content: center;
       align-items: center;
