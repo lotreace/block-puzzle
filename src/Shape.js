@@ -117,11 +117,24 @@ export class Shape {
     const rows = this.pattern.length;
     const cols = this.pattern[0].length;
 
+    // Responsive cell size (same as createElement)
+    const viewportWidth = window.innerWidth;
+    let cellSize = 30;
+    let gap = 2;
+
+    if (viewportWidth < 400) {
+      cellSize = 22;
+      gap = 1;
+    } else if (viewportWidth < 768) {
+      cellSize = 25;
+      gap = 2;
+    }
+
     preview.style.cssText = `
       display: grid;
-      grid-template-columns: repeat(${cols}, 30px);
-      grid-template-rows: repeat(${rows}, 30px);
-      gap: 2px;
+      grid-template-columns: repeat(${cols}, ${cellSize}px);
+      grid-template-rows: repeat(${rows}, ${cellSize}px);
+      gap: ${gap}px;
       pointer-events: none;
       position: fixed;
       z-index: 1000;
@@ -133,8 +146,8 @@ export class Shape {
         const cell = document.createElement('div');
         if (this.pattern[row][col]) {
           cell.style.cssText = `
-            width: 30px;
-            height: 30px;
+            width: ${cellSize}px;
+            height: ${cellSize}px;
             background-color: ${this.color};
             border-top: 4px solid rgba(255, 255, 255, 0.6);
             border-left: 4px solid rgba(255, 255, 255, 0.6);

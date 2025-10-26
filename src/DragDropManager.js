@@ -139,10 +139,16 @@ export class DragDropManager {
         );
       }
 
-      // Check if shape can be placed
-      if (this.gameBoard.canPlaceShape(this.draggedShape.pattern, cell.row, cell.col)) {
-        this.gameBoard.highlightCells(this.draggedShape.pattern, cell.row, cell.col, true);
-        this.currentHighlightPos = cell;
+      // Find the best placement position where mouse is over any part of the shape
+      const bestPosition = this.gameBoard.findBestPlacementPosition(
+        this.draggedShape.pattern,
+        cell.row,
+        cell.col
+      );
+
+      if (bestPosition) {
+        this.gameBoard.highlightCells(this.draggedShape.pattern, bestPosition.row, bestPosition.col, true);
+        this.currentHighlightPos = bestPosition;
       } else {
         this.currentHighlightPos = null;
       }
@@ -173,39 +179,53 @@ export class DragDropManager {
         this.currentHighlightPos.col,
         false
       );
-      this.currentHighlightPos = null;
     }
 
     const cell = this.gameBoard.getCellAtPosition(e.clientX, e.clientY);
 
-    if (cell && this.gameBoard.canPlaceShape(this.draggedShape.pattern, cell.row, cell.col)) {
-      // Place the shape
-      this.gameBoard.placeShape(this.draggedShape.pattern, cell.row, cell.col, this.draggedShape.color);
+    if (cell) {
+      // Find the best placement position
+      const bestPosition = this.gameBoard.findBestPlacementPosition(
+        this.draggedShape.pattern,
+        cell.row,
+        cell.col
+      );
 
-      // Clean up drag preview immediately
-      if (this.dragPreview && this.dragPreview.parentElement) {
-        this.dragPreview.parentElement.removeChild(this.dragPreview);
-      }
-      this.dragPreview = null;
+      if (bestPosition) {
+        // Place the shape at the best position
+        this.gameBoard.placeShape(this.draggedShape.pattern, bestPosition.row, bestPosition.col, this.draggedShape.color);
+        this.currentHighlightPos = null;
 
-      // Remove shape element from DOM
-      if (this.draggedShape.element && this.draggedShape.element.parentElement) {
-        this.draggedShape.element.parentElement.removeChild(this.draggedShape.element);
-      }
+        // Clean up drag preview immediately
+        if (this.dragPreview && this.dragPreview.parentElement) {
+          this.dragPreview.parentElement.removeChild(this.dragPreview);
+        }
+        this.dragPreview = null;
 
-      // Remove shape from selector
-      this.shapeSelector.removeShape(this.draggedShape);
+        // Remove shape element from DOM
+        if (this.draggedShape.element && this.draggedShape.element.parentElement) {
+          this.draggedShape.element.parentElement.removeChild(this.draggedShape.element);
+        }
 
-      // Clear dragged shape reference
-      this.draggedShape = null;
+        // Remove shape from selector
+        this.shapeSelector.removeShape(this.draggedShape);
 
-      // Notify game
-      if (this.onShapePlaced) {
-        this.onShapePlaced();
+        // Clear dragged shape reference
+        this.draggedShape = null;
+
+        // Notify game
+        if (this.onShapePlaced) {
+          this.onShapePlaced();
+        }
+      } else {
+        // Return shape to original position
+        this.shapeSelector.returnShapeToSlot(this.draggedShape);
+        this.currentHighlightPos = null;
       }
     } else {
       // Return shape to original position
       this.shapeSelector.returnShapeToSlot(this.draggedShape);
+      this.currentHighlightPos = null;
     }
   }
 

@@ -194,4 +194,59 @@ export class GameBoard {
     }
     return null;
   }
+
+  findBestPlacementPosition(shapePattern, mouseRow, mouseCol) {
+    const possiblePositions = [];
+
+    // Find all valid positions where the shape could be placed
+    // such that the mouse would be over one of the shape's cells
+    for (let startRow = 0; startRow < this.size; startRow++) {
+      for (let startCol = 0; startCol < this.size; startCol++) {
+        // Check if this placement is valid
+        if (!this.canPlaceShape(shapePattern, startRow, startCol)) {
+          continue;
+        }
+
+        // Check if the mouse position would be over this shape
+        let mouseOverShape = false;
+        for (let row = 0; row < shapePattern.length; row++) {
+          for (let col = 0; col < shapePattern[row].length; col++) {
+            if (shapePattern[row][col]) {
+              const cellRow = startRow + row;
+              const cellCol = startCol + col;
+              if (cellRow === mouseRow && cellCol === mouseCol) {
+                mouseOverShape = true;
+                break;
+              }
+            }
+          }
+          if (mouseOverShape) break;
+        }
+
+        if (mouseOverShape) {
+          // Calculate how centered the mouse is over this shape
+          const shapeCenterRow = startRow + (shapePattern.length - 1) / 2;
+          const shapeCenterCol = startCol + (shapePattern[0].length - 1) / 2;
+          const distanceFromCenter = Math.sqrt(
+            Math.pow(mouseRow - shapeCenterRow, 2) +
+            Math.pow(mouseCol - shapeCenterCol, 2)
+          );
+
+          possiblePositions.push({
+            row: startRow,
+            col: startCol,
+            distanceFromCenter
+          });
+        }
+      }
+    }
+
+    // Return the position where the mouse is most centered
+    if (possiblePositions.length === 0) {
+      return null;
+    }
+
+    possiblePositions.sort((a, b) => a.distanceFromCenter - b.distanceFromCenter);
+    return { row: possiblePositions[0].row, col: possiblePositions[0].col };
+  }
 }

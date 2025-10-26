@@ -114,10 +114,16 @@ export class TouchDragManager {
         );
       }
 
-      // Check if shape can be placed
-      if (this.gameBoard.canPlaceShape(this.draggedShape.pattern, cell.row, cell.col)) {
-        this.gameBoard.highlightCells(this.draggedShape.pattern, cell.row, cell.col, true);
-        this.currentHighlightPos = cell;
+      // Find the best placement position where touch is over any part of the shape
+      const bestPosition = this.gameBoard.findBestPlacementPosition(
+        this.draggedShape.pattern,
+        cell.row,
+        cell.col
+      );
+
+      if (bestPosition) {
+        this.gameBoard.highlightCells(this.draggedShape.pattern, bestPosition.row, bestPosition.col, true);
+        this.currentHighlightPos = bestPosition;
       } else {
         this.currentHighlightPos = null;
       }
@@ -154,34 +160,47 @@ export class TouchDragManager {
 
     const cell = this.gameBoard.getCellAtPosition(touch.clientX, touch.clientY);
 
-    if (cell && this.gameBoard.canPlaceShape(this.draggedShape.pattern, cell.row, cell.col)) {
-      // Place the shape
-      this.gameBoard.placeShape(this.draggedShape.pattern, cell.row, cell.col, this.draggedShape.color);
+    if (cell) {
+      // Find the best placement position
+      const bestPosition = this.gameBoard.findBestPlacementPosition(
+        this.draggedShape.pattern,
+        cell.row,
+        cell.col
+      );
 
-      // Clean up drag preview
-      if (this.dragPreview && this.dragPreview.parentElement) {
-        this.dragPreview.parentElement.removeChild(this.dragPreview);
+      if (bestPosition) {
+        // Place the shape at the best position
+        this.gameBoard.placeShape(this.draggedShape.pattern, bestPosition.row, bestPosition.col, this.draggedShape.color);
+
+        // Clean up drag preview
+        if (this.dragPreview && this.dragPreview.parentElement) {
+          this.dragPreview.parentElement.removeChild(this.dragPreview);
+        }
+        this.dragPreview = null;
+
+        // Remove shape element from DOM
+        if (this.draggedShape.element && this.draggedShape.element.parentElement) {
+          this.draggedShape.element.parentElement.removeChild(this.draggedShape.element);
+        }
+
+        // Remove shape from selector
+        this.shapeSelector.removeShape(this.draggedShape);
+
+        // Clear dragged shape reference
+        const shapePlaced = true;
+        this.draggedShape = null;
+        this.currentHighlightPos = null;
+
+        // Notify game
+        if (this.onShapePlaced && shapePlaced) {
+          this.onShapePlaced();
+        }
+        return;
       }
-      this.dragPreview = null;
+    }
 
-      // Remove shape element from DOM
-      if (this.draggedShape.element && this.draggedShape.element.parentElement) {
-        this.draggedShape.element.parentElement.removeChild(this.draggedShape.element);
-      }
-
-      // Remove shape from selector
-      this.shapeSelector.removeShape(this.draggedShape);
-
-      // Clear dragged shape reference
-      const shapePlaced = true;
-      this.draggedShape = null;
-      this.currentHighlightPos = null;
-
-      // Notify game
-      if (this.onShapePlaced && shapePlaced) {
-        this.onShapePlaced();
-      }
-    } else {
+    // If we get here, shape couldn't be placed
+    {
       // Return shape to original position
       this.shapeSelector.returnShapeToSlot(this.draggedShape);
 
