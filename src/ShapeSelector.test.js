@@ -144,7 +144,7 @@ describe('ShapeSelector', () => {
     });
 
     it('should handle removing non-existent shape gracefully', () => {
-      const fakeShape = new Shape('SQUARE');
+      const fakeShape = new Shape('SQUARE_2X2');
       expect(() => shapeSelector.removeShape(fakeShape)).not.toThrow();
     });
   });
@@ -182,7 +182,7 @@ describe('ShapeSelector', () => {
     });
 
     it('should handle returning non-existent shape gracefully', () => {
-      const fakeShape = new Shape('SQUARE');
+      const fakeShape = new Shape('SQUARE_2X2');
       fakeShape.createElement();
 
       expect(() => shapeSelector.returnShapeToSlot(fakeShape)).not.toThrow();

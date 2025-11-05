@@ -38,19 +38,19 @@ describe('Shape', () => {
 
   describe('constructor', () => {
     it('should create a shape with valid type', () => {
-      const shape = new Shape('SQUARE');
-      expect(shape.type).toBe('SQUARE');
+      const shape = new Shape('SQUARE_2X2');
+      expect(shape.type).toBe('SQUARE_2X2');
       expect(shape.pattern).toEqual([[1, 1], [1, 1]]);
       expect(shape.color).toBe('#f39c12');
     });
 
     it('should initialize with null element', () => {
-      const shape = new Shape('SQUARE');
+      const shape = new Shape('SQUARE_2X2');
       expect(shape.element).toBeNull();
     });
 
     it('should initialize dragging state', () => {
-      const shape = new Shape('SQUARE');
+      const shape = new Shape('SQUARE_2X2');
       expect(shape.isDragging).toBe(false);
       expect(shape.originalParent).toBeNull();
       expect(shape.originalPosition).toBeNull();
@@ -59,7 +59,7 @@ describe('Shape', () => {
 
   describe('createElement', () => {
     it('should create DOM element for the shape', () => {
-      const shape = new Shape('SQUARE');
+      const shape = new Shape('SQUARE_2X2');
       const element = shape.createElement();
 
       expect(element).toBeDefined();
@@ -68,22 +68,22 @@ describe('Shape', () => {
     });
 
     it('should create correct number of cells', () => {
-      const shape = new Shape('I_HORIZONTAL');
+      const shape = new Shape('I_HORIZONTAL_3');
       const element = shape.createElement();
 
-      // I_HORIZONTAL is 1x3, so should have 3 children
+      // I_HORIZONTAL_3 is 1x3, so should have 3 children
       expect(element.children.length).toBe(3);
     });
 
     it('should create a 2x2 grid for SQUARE shape', () => {
-      const shape = new Shape('SQUARE');
+      const shape = new Shape('SQUARE_2X2');
       const element = shape.createElement();
 
       expect(element.children.length).toBe(4); // 2x2 = 4 cells
     });
 
     it('should apply color to filled cells only', () => {
-      const shape = new Shape('L_SHAPE'); // Has pattern [[1, 0], [1, 0], [1, 1]]
+      const shape = new Shape('L_SHAPE_0'); // Has pattern [[1, 0], [1, 0], [1, 1]]
       const element = shape.createElement();
 
       const cells = Array.from(element.children);
@@ -91,11 +91,11 @@ describe('Shape', () => {
       const coloredCells = cells.filter(cell =>
         cell.style.backgroundColor && cell.style.backgroundColor !== 'transparent'
       );
-      expect(coloredCells.length).toBe(4); // L_SHAPE has 4 filled cells
+      expect(coloredCells.length).toBe(4); // L_SHAPE_0 has 4 filled cells
     });
 
     it('should set element property', () => {
-      const shape = new Shape('SQUARE');
+      const shape = new Shape('SQUARE_2X2');
       expect(shape.element).toBeNull();
 
       shape.createElement();
@@ -105,7 +105,7 @@ describe('Shape', () => {
 
   describe('createDragPreview', () => {
     it('should create a drag preview element', () => {
-      const shape = new Shape('SQUARE');
+      const shape = new Shape('SQUARE_2X2');
       const preview = shape.createDragPreview();
 
       expect(preview).toBeDefined();
@@ -115,14 +115,14 @@ describe('Shape', () => {
     });
 
     it('should create preview with same pattern as shape', () => {
-      const shape = new Shape('I_HORIZONTAL');
+      const shape = new Shape('I_HORIZONTAL_3');
       const preview = shape.createDragPreview();
 
-      expect(preview.children.length).toBe(3); // I_HORIZONTAL has 3 cells
+      expect(preview.children.length).toBe(3); // I_HORIZONTAL_3 has 3 cells
     });
 
     it('should have opacity set', () => {
-      const shape = new Shape('SQUARE');
+      const shape = new Shape('SQUARE_2X2');
       const preview = shape.createDragPreview();
 
       expect(preview.style.opacity).toBe('0.7');
@@ -155,27 +155,27 @@ describe('Shape', () => {
 
   describe('specific shapes', () => {
     it('should create I_HORIZONTAL correctly', () => {
-      const shape = new Shape('I_HORIZONTAL');
+      const shape = new Shape('I_HORIZONTAL_3');
       expect(shape.pattern).toEqual([[1, 1, 1]]);
     });
 
     it('should create I_VERTICAL correctly', () => {
-      const shape = new Shape('I_VERTICAL');
+      const shape = new Shape('I_VERTICAL_3');
       expect(shape.pattern).toEqual([[1], [1], [1]]);
     });
 
     it('should create SQUARE correctly', () => {
-      const shape = new Shape('SQUARE');
+      const shape = new Shape('SQUARE_2X2');
       expect(shape.pattern).toEqual([[1, 1], [1, 1]]);
     });
 
     it('should create L_SHAPE correctly', () => {
-      const shape = new Shape('L_SHAPE');
+      const shape = new Shape('L_SHAPE_0');
       expect(shape.pattern).toEqual([[1, 0], [1, 0], [1, 1]]);
     });
 
     it('should create T_SHAPE correctly', () => {
-      const shape = new Shape('T_SHAPE');
+      const shape = new Shape('T_SHAPE_0');
       expect(shape.pattern).toEqual([[1, 1, 1], [0, 1, 0]]);
     });
 

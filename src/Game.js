@@ -7,7 +7,7 @@ import { TouchDragManager } from './TouchDragManager.js';
 export class Game {
   constructor(container) {
     this.container = container;
-    this.gameBoard = new GameBoard(8);
+    this.gameBoard = new GameBoard(9);
     this.shapeSelector = new ShapeSelector();
     this.scoreManager = new ScoreManager();
     this.dragDropManager = null;

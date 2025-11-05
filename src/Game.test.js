@@ -68,7 +68,7 @@ describe('Game', () => {
 
     it('should update score when lines are cleared', () => {
       // Fill a row
-      for (let col = 0; col < 8; col++) {
+      for (let col = 0; col < 9; col++) {
         game.gameBoard.grid[0][col] = true;
       }
 
@@ -102,10 +102,10 @@ describe('Game', () => {
 
     it('should award correct points for multiple lines', () => {
       // Fill first row and first column
-      for (let col = 0; col < 8; col++) {
+      for (let col = 0; col < 9; col++) {
         game.gameBoard.grid[0][col] = true;
       }
-      for (let row = 0; row < 8; row++) {
+      for (let row = 0; row < 9; row++) {
         game.gameBoard.grid[row][0] = true;
       }
 
@@ -142,8 +142,8 @@ describe('Game', () => {
 
     it('should trigger game over when board is full', () => {
       // Fill entire board
-      for (let row = 0; row < 8; row++) {
-        for (let col = 0; col < 8; col++) {
+      for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
           game.gameBoard.grid[row][col] = true;
         }
       }
@@ -223,7 +223,7 @@ describe('Game', () => {
 
     it('should award 100 points per line cleared', () => {
       // Fill one row
-      for (let col = 0; col < 8; col++) {
+      for (let col = 0; col < 9; col++) {
         game.gameBoard.grid[0][col] = true;
       }
 
@@ -233,13 +233,13 @@ describe('Game', () => {
 
     it('should accumulate score across multiple clears', () => {
       // Clear first line
-      for (let col = 0; col < 8; col++) {
+      for (let col = 0; col < 9; col++) {
         game.gameBoard.grid[0][col] = true;
       }
       game.handleShapePlaced();
 
       // Clear second line
-      for (let col = 0; col < 8; col++) {
+      for (let col = 0; col < 9; col++) {
         game.gameBoard.grid[1][col] = true;
       }
       game.handleShapePlaced();
@@ -294,9 +294,9 @@ describe('Game', () => {
       expect(scoreValue.textContent).toBe('300');
     });
 
-    it('should create 8x8 grid of cells', () => {
+    it('should create 9x9 grid of cells', () => {
       const cells = container.querySelectorAll('.board-cell');
-      expect(cells.length).toBe(64); // 8 * 8
+      expect(cells.length).toBe(81); // 9 * 9
     });
 
     it('should create 3 shape slots', () => {

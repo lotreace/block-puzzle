@@ -5,19 +5,19 @@ describe('GameBoard', () => {
   let gameBoard;
 
   beforeEach(() => {
-    gameBoard = new GameBoard(8);
+    gameBoard = new GameBoard(9);
   });
 
   describe('initialization', () => {
     it('should create a board with the correct size', () => {
-      expect(gameBoard.size).toBe(8);
-      expect(gameBoard.grid.length).toBe(8);
-      expect(gameBoard.grid[0].length).toBe(8);
+      expect(gameBoard.size).toBe(9);
+      expect(gameBoard.grid.length).toBe(9);
+      expect(gameBoard.grid[0].length).toBe(9);
     });
 
     it('should initialize all cells as empty (false)', () => {
-      for (let row = 0; row < 8; row++) {
-        for (let col = 0; col < 8; col++) {
+      for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
           expect(gameBoard.grid[row][col]).toBe(false);
         }
       }
@@ -27,7 +27,7 @@ describe('GameBoard', () => {
       const element = gameBoard.createBoard();
       expect(element).toBeDefined();
       expect(element.className).toBe('game-board');
-      expect(gameBoard.cellElements.length).toBe(8);
+      expect(gameBoard.cellElements.length).toBe(9);
     });
   });
 
@@ -39,7 +39,7 @@ describe('GameBoard', () => {
 
     it('should not allow placing a shape out of bounds', () => {
       const pattern = [[1, 1], [1, 1]];
-      expect(gameBoard.canPlaceShape(pattern, 7, 7)).toBe(false);
+      expect(gameBoard.canPlaceShape(pattern, 8, 8)).toBe(false);
       expect(gameBoard.canPlaceShape(pattern, -1, 0)).toBe(false);
       expect(gameBoard.canPlaceShape(pattern, 0, -1)).toBe(false);
     });
@@ -53,7 +53,7 @@ describe('GameBoard', () => {
     it('should handle complex shapes correctly', () => {
       const lShape = [[1, 0], [1, 0], [1, 1]];
       expect(gameBoard.canPlaceShape(lShape, 0, 0)).toBe(true);
-      expect(gameBoard.canPlaceShape(lShape, 6, 7)).toBe(false); // out of bounds
+      expect(gameBoard.canPlaceShape(lShape, 7, 8)).toBe(false); // out of bounds
     });
   });
 
@@ -90,7 +90,7 @@ describe('GameBoard', () => {
 
     it('should clear a completed row', () => {
       // Fill entire first row
-      for (let col = 0; col < 8; col++) {
+      for (let col = 0; col < 9; col++) {
         gameBoard.grid[0][col] = true;
       }
 
@@ -98,14 +98,14 @@ describe('GameBoard', () => {
       expect(linesCleared).toBe(1);
 
       // Check that row is now empty
-      for (let col = 0; col < 8; col++) {
+      for (let col = 0; col < 9; col++) {
         expect(gameBoard.grid[0][col]).toBe(false);
       }
     });
 
     it('should clear a completed column', () => {
       // Fill entire first column
-      for (let row = 0; row < 8; row++) {
+      for (let row = 0; row < 9; row++) {
         gameBoard.grid[row][0] = true;
       }
 
@@ -113,19 +113,19 @@ describe('GameBoard', () => {
       expect(linesCleared).toBe(1);
 
       // Check that column is now empty
-      for (let row = 0; row < 8; row++) {
+      for (let row = 0; row < 9; row++) {
         expect(gameBoard.grid[row][0]).toBe(false);
       }
     });
 
     it('should clear multiple rows and columns simultaneously', () => {
       // Fill first row
-      for (let col = 0; col < 8; col++) {
+      for (let col = 0; col < 9; col++) {
         gameBoard.grid[0][col] = true;
       }
 
       // Fill first column
-      for (let row = 0; row < 8; row++) {
+      for (let row = 0; row < 9; row++) {
         gameBoard.grid[row][0] = true;
       }
 

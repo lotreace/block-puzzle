@@ -1,40 +1,147 @@
 export class Shape {
   static SHAPES = {
-    I_HORIZONTAL: {
+    // I pieces - 2 rotations
+    I_HORIZONTAL_3: {
       pattern: [[1, 1, 1]],
       color: '#e74c3c'
     },
-    I_VERTICAL: {
+    I_VERTICAL_3: {
       pattern: [[1], [1], [1]],
+      color: '#e74c3c'
+    },
+    I_HORIZONTAL_4: {
+      pattern: [[1, 1, 1, 1]],
       color: '#3498db'
     },
-    SQUARE: {
+    I_VERTICAL_4: {
+      pattern: [[1], [1], [1], [1]],
+      color: '#3498db'
+    },
+    I_HORIZONTAL_5: {
+      pattern: [[1, 1, 1, 1, 1]],
+      color: '#e67e22'
+    },
+    I_VERTICAL_5: {
+      pattern: [[1], [1], [1], [1], [1]],
+      color: '#e67e22'
+    },
+
+    // Square - no rotation needed
+    SQUARE_2X2: {
       pattern: [[1, 1], [1, 1]],
       color: '#f39c12'
     },
-    L_SHAPE: {
+    SQUARE_3X3: {
+      pattern: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+      color: '#f1c40f'
+    },
+
+    // L shapes - 4 rotations each
+    L_SHAPE_0: {
       pattern: [[1, 0], [1, 0], [1, 1]],
       color: '#9b59b6'
     },
-    L_REVERSE: {
+    L_SHAPE_90: {
+      pattern: [[1, 1, 1], [1, 0, 0]],
+      color: '#9b59b6'
+    },
+    L_SHAPE_180: {
+      pattern: [[1, 1], [0, 1], [0, 1]],
+      color: '#9b59b6'
+    },
+    L_SHAPE_270: {
+      pattern: [[0, 0, 1], [1, 1, 1]],
+      color: '#9b59b6'
+    },
+
+    // Reverse L shapes - 4 rotations
+    L_REVERSE_0: {
       pattern: [[0, 1], [0, 1], [1, 1]],
       color: '#1abc9c'
     },
-    T_SHAPE: {
+    L_REVERSE_90: {
+      pattern: [[1, 0, 0], [1, 1, 1]],
+      color: '#1abc9c'
+    },
+    L_REVERSE_180: {
+      pattern: [[1, 1], [1, 0], [1, 0]],
+      color: '#1abc9c'
+    },
+    L_REVERSE_270: {
+      pattern: [[1, 1, 1], [0, 0, 1]],
+      color: '#1abc9c'
+    },
+
+    // T shapes - 4 rotations
+    T_SHAPE_0: {
       pattern: [[1, 1, 1], [0, 1, 0]],
       color: '#e67e22'
     },
-    Z_SHAPE: {
+    T_SHAPE_90: {
+      pattern: [[0, 1], [1, 1], [0, 1]],
+      color: '#e67e22'
+    },
+    T_SHAPE_180: {
+      pattern: [[0, 1, 0], [1, 1, 1]],
+      color: '#e67e22'
+    },
+    T_SHAPE_270: {
+      pattern: [[1, 0], [1, 1], [1, 0]],
+      color: '#e67e22'
+    },
+
+    // Z shapes - 2 rotations
+    Z_SHAPE_0: {
       pattern: [[1, 1, 0], [0, 1, 1]],
       color: '#16a085'
     },
+    Z_SHAPE_90: {
+      pattern: [[0, 1], [1, 1], [1, 0]],
+      color: '#16a085'
+    },
+
+    // S shapes (reverse Z) - 2 rotations
+    S_SHAPE_0: {
+      pattern: [[0, 1, 1], [1, 1, 0]],
+      color: '#27ae60'
+    },
+    S_SHAPE_90: {
+      pattern: [[1, 0], [1, 1], [0, 1]],
+      color: '#27ae60'
+    },
+
+    // Small L shapes - 4 rotations
+    SMALL_L_0: {
+      pattern: [[1, 0], [1, 1]],
+      color: '#8e44ad'
+    },
+    SMALL_L_90: {
+      pattern: [[1, 1], [1, 0]],
+      color: '#8e44ad'
+    },
+    SMALL_L_180: {
+      pattern: [[1, 1], [0, 1]],
+      color: '#8e44ad'
+    },
+    SMALL_L_270: {
+      pattern: [[0, 1], [1, 1]],
+      color: '#8e44ad'
+    },
+
+    // Single block
     SINGLE: {
       pattern: [[1]],
       color: '#c0392b'
     },
-    SMALL_L: {
-      pattern: [[1, 0], [1, 1]],
-      color: '#8e44ad'
+
+    // 2x1 blocks
+    TWO_HORIZONTAL: {
+      pattern: [[1, 1]],
+      color: '#d35400'
+    },
+    TWO_VERTICAL: {
+      pattern: [[1], [1]],
+      color: '#d35400'
     }
   };
 
